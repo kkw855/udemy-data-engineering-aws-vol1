@@ -1,8 +1,6 @@
-# redshift-cluster-1
-
-# 3. Amazon Redshift 클러스터 생성
 resource "aws_redshift_cluster" "mysample_cluster" {
-  cluster_identifier = "ra3aws-redshift-cluster"
+  # cluster_identifier = "ra3aws-redshift-cluster"
+  cluster_identifier = "redshift-cluster-1"
   database_name      = "dev"
   master_username    = "awsuser"
   master_password    = "SecurePassword123!" # TODO: ⚠️ 실제 환경에서는 변수(Variables)나 Secrets Manager를 활용하세요.
@@ -21,4 +19,7 @@ resource "aws_redshift_cluster" "mysample_cluster" {
 
   # 🔗 생성한 IAM Role의 ARN을 여기에 연결합니다.
   iam_roles = [aws_iam_role.redshift_s3_role.arn]
+
+  # 🔗 [여기 주목!] 생성한 Redshift 보안 그룹 ID를 대괄호 안에 리스트 형태로 넣어줍니다.
+  vpc_security_group_ids = [aws_security_group.redshift_sg.id]
 }
